@@ -1,9 +1,9 @@
 # DON'T UPDATE TO alpine3.13, 1.14, see #41.
-FROM node:14-alpine3.12 AS release
+FROM node:14-bullseye AS release
 WORKDIR /app
 
 # Install apprise
-RUN apk add --no-cache python3 py3-cryptography py3-pip py3-six py3-yaml py3-click py3-markdown py3-requests py3-requests-oauthlib
+RUN apt update && apt --yes install python3 python3-pip python3-cryptography python3-six python3-yaml python3-click python3-markdown python3-requests python3-requests-oauthlib
 RUN pip3 --no-cache-dir install apprise && \
             rm -rf /root/.cache
 
