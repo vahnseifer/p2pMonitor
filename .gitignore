@@ -4,7 +4,7 @@ dist
 dist-ssr
 *.local
 .idea
-
+/bin
 /data
 !/data/.gitkeep
 .vscode

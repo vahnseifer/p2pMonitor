@@ -8,6 +8,7 @@
 **/.dockerignore
 /private
 **/.git
+**/bin
 **/.gitignore
 **/docker-compose*
 **/[Dd]ockerfile*
