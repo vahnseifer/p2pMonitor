@@ -6,7 +6,7 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 const axios = require("axios");
 const { Prometheus } = require("../prometheus");
-const { log, UP, DOWN, PENDING, flipStatus, TimeLogger } = require("../../src/util");
+const { log, UP, DOWN, PENDING, flipStatus, TimeLogger, MAX_INTERVAL } = require("../../src/util");
 const { tcping, ping, dnsResolve, checkCertificate, checkStatusCode, getTotalClientInRoom, setting, mqttAsync } = require("../util-server");
 const { R } = require("redbean-node");
 const { BeanModel } = require("redbean-node/dist/bean-model");
@@ -167,7 +167,7 @@ class Monitor extends BeanModel {
 
             let beatInterval = this.interval;
 
-            if (! beatInterval) {
+            if (! beatInterval || beatInterval < 1) {
                 beatInterval = 1;
             }
 
@@ -176,6 +176,13 @@ class Monitor extends BeanModel {
                     console.log("beat interval too low, reset to 20s");
                     beatInterval = 20;
                 }
+            }
+
+            // Prevent an issue like https://github.com/louislam/uptime-kuma/issues/897
+            // Because setTimeout accept <= 2,147,483,647 ms only
+            // But beatInterval is in second, so need to divided by 1000
+            if (beatInterval > MAX_INTERVAL) {
+                beatInterval = MAX_INTERVAL;
             }
 
             // Expose here for prometheus update

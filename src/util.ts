@@ -19,6 +19,8 @@ export const STATUS_PAGE_ALL_DOWN = 0;
 export const STATUS_PAGE_ALL_UP = 1;
 export const STATUS_PAGE_PARTIAL_DOWN = 2;
 
+export const MAX_INTERVAL = 2147482;
+
 
 export function flipStatus(s: number) {
     if (s === UP) {

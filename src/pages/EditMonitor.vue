@@ -151,7 +151,7 @@
                             <!-- Interval -->
                             <div class="my-3">
                                 <label for="interval" class="form-label">{{ $t("Heartbeat Interval") }} ({{ $t("checkEverySecond", [ monitor.interval ]) }})</label>
-                                <input id="interval" v-model="monitor.interval" type="number" class="form-control" required min="20" step="1">
+                                <input id="interval" v-model="monitor.interval" type="number" class="form-control" required min="20" :max="maxInterval" step="1">
                             </div>
 
                             <div class="my-3">
@@ -367,7 +367,7 @@ import CopyableInput from "../components/CopyableInput.vue";
 import NotificationDialog from "../components/NotificationDialog.vue";
 import ProxyDialog from "../components/ProxyDialog.vue";
 import TagsManager from "../components/TagsManager.vue";
-import { genSecret, isDev } from "../util.ts";
+import { genSecret, isDev, MAX_INTERVAL } from "../util.ts";
 
 const toast = useToast();
 
@@ -382,6 +382,7 @@ export default {
 
     data() {
         return {
+            maxInterval: MAX_INTERVAL,
             processing: false,
             monitor: {
                 notificationIDList: {},
