@@ -16,8 +16,11 @@ const jobs = [
  * @returns {Bree}
  */
 const initBackgroundJobs = function (args) {
+    log.debug("jobs", "Jobs dir: " + path.resolve("server", "jobs"));
+    log.debug("jobs", "Jobs dir: " + path.join(__dirname, "./jobs"));
+
     bree = new Bree({
-        root: path.resolve("server", "jobs"),
+        root: path.join(__dirname, "./jobs"),
         jobs,
         worker: {
             env: SHARE_ENV,
